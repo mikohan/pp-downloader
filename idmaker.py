@@ -1,12 +1,24 @@
 from bs4 import BeautifulSoup as bs
 import requests
+from requests.auth import HTTPBasicAuth
+import re
+from robobrowser import RoboBrowser
 
-url = "https://www.englishcoachchad.com/products/practice-paradise/categories/553711"
+credentials = ("angara99@gmail.com", "suki33338")
+# data = {"login": "angara99@gmail.com", "password": "suki33338"}
+url_login = "https://www.englishcoachchad.com/login"
 
-r = requests.get(url)
-print(r.status_code)
 
-html = r.text
-print(html)
+url_course = (
+    "https://www.englishcoachchad.com/products/practice-paradise/categories/553711"
+)
 
-# soup = bs(html, "html.parser")
+browser = RoboBrowser(username="angara99@gmail.com", password="suki33338")
+
+browser.open(url_login)
+
+signup_form = browser.get_form("login_form")
+signup_form["identity"].value = self.username
+
+signup_form["password"].value = self.password
+browser.submit_form(signup_form)
