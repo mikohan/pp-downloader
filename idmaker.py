@@ -28,7 +28,6 @@ signup_form["member[password]"].value = "suki33338"
 browser.submit_form(signup_form)
 
 content = browser.parsed()
-print(content)
 
 with open("tmp.html", "w") as f:
-    f.write(content)
+    f.write(sr(content))
