@@ -16,7 +16,7 @@ url_course = (
     "https://www.englishcoachchad.com/products/practice-paradise/categories/553711"
 )
 
-browser = RoboBrowser()
+browser = RoboBrowser(user_agent=MOBILE_USER_AGENT, parser="lxml")
 
 browser.open(url_login)
 
@@ -28,8 +28,7 @@ signup_form["member[password]"].value = "suki33338"
 browser.submit_form(signup_form)
 
 content = browser.parsed()
-prit(content)
+print(content)
 
-f = open("tmp.html")
-f.write(content, "w")
-f.close()
+with open("tmp.html", "w") as f:
+    f.write(content)
