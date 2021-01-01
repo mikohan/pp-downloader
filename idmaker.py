@@ -26,3 +26,10 @@ signup_form["member[email]"].value = "angara99@gmail.com"
 
 signup_form["member[password]"].value = "suki33338"
 browser.submit_form(signup_form)
+
+content = browser.parsed()
+prit(content)
+
+f = open("tmp.html")
+f.write(content, "w")
+f.close()
