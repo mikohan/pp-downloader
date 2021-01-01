@@ -2,6 +2,9 @@ from bs4 import BeautifulSoup as bs
 import requests
 from requests.auth import HTTPBasicAuth
 import re
+import werkzeug
+
+werkzeug.cached_property = werkzeug.utils.cached_property
 from robobrowser import RoboBrowser
 
 credentials = ("angara99@gmail.com", "suki33338")
@@ -13,12 +16,13 @@ url_course = (
     "https://www.englishcoachchad.com/products/practice-paradise/categories/553711"
 )
 
-browser = RoboBrowser(username="angara99@gmail.com", password="suki33338")
+browser = RoboBrowser()
 
 browser.open(url_login)
 
-signup_form = browser.get_form("login_form")
-signup_form["identity"].value = self.username
+signup_form = browser.get_form(id="new_member_session")
+print(signup_form)
+signup_form["member[email]"].value = "angara99@gmail.com"
 
-signup_form["password"].value = self.password
+signup_form["member[password]"].value = "suki33338"
 browser.submit_form(signup_form)
