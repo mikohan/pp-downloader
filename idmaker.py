@@ -2,6 +2,8 @@ from bs4 import BeautifulSoup as bs
 import requests
 from requests.auth import HTTPBasicAuth
 import re
+
+re._pattern_type = re.Pattern
 import werkzeug
 
 werkzeug.cached_property = werkzeug.utils.cached_property
@@ -27,9 +29,9 @@ signup_form["member[email]"].value = "angara99@gmail.com"
 
 signup_form["member[password]"].value = "suki33338"
 browser.submit_form(signup_form)
-browser.follow_link(browser.get_link(url_course))
+browser.open(url_course)
 
 content = browser.parsed()
 
 with open("tmp.html", "w") as f:
-    f.write(sr(content))
+    f.write(content)
