@@ -27,7 +27,7 @@ signup_form["member[email]"].value = "angara99@gmail.com"
 
 signup_form["member[password]"].value = "suki33338"
 browser.submit_form(signup_form)
-browser.follow_link(url_course)
+browser.follow_link(browser.get_link(url_course))
 
 content = browser.parsed()
 
