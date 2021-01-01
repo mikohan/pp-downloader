@@ -34,4 +34,4 @@ browser.open(url_course)
 content = browser.parsed()
 
 with open("tmp.html", "w") as f:
-    f.write(content)
+    f.write(str(content))
