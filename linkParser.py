@@ -2,10 +2,10 @@ from bs4 import BeautifulSoup as bs
 import requests
 import re
 
-from request_test import URL
+from config import URL, HEADERS
 
 
-def get_video_id(url: str, headers: dict) -> str:
+def get_video_id(url: str, HEADERS: dict) -> str:
 
     r = requests.get(url, headers)
     html = r.text
@@ -17,5 +17,5 @@ def get_video_id(url: str, headers: dict) -> str:
     s = bs(content, "lxml")
     d = s.find("div", class_="wistia_embed")
     m = re.search('(wistia_async_)(\w+)"', str(d))
-    print(m.group(2))
+    print("in get video function", m.group(2))
     return m.group(2)

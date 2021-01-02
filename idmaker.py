@@ -2,6 +2,10 @@ from bs4 import BeautifulSoup as bs
 import requests
 from requests.auth import HTTPBasicAuth
 import re
+from linkParser import get_video_id
+import csv
+from config import PASS, USER, URL
+import os
 
 re._pattern_type = re.Pattern
 import werkzeug
@@ -25,13 +29,35 @@ browser.open(url_login)
 
 signup_form = browser.get_form(id="new_member_session")
 print(signup_form)
-signup_form["member[email]"].value = "angara99@gmail.com"
+signup_form["member[email]"].value = USER
 
-signup_form["member[password]"].value = "suki33338"
+signup_form["member[password]"].value = PASS
 browser.submit_form(signup_form)
 browser.open(url_course)
 
 content = browser.parsed()
+browser.find_all("div", class_="syllabus__item")
+links = browser.get_links()
+
+append: str = "w"
+if os.path.exists("links.txt"):
+    append = "a"
+else:
+    append = "w"
+
+with open("links.txt", append) as file:
+    for link in links:
+        file.write(str(link.get("href")) + "\n")
+        print(URL + link.get("href"))
+
+# Here will be loop for finded liks
+
+
+# Write to csv file
+
+with open("video_ids.csv", "a") as csv:
+    # loop here
+    pass
 
 with open("tmp.html", "w") as f:
     f.write(str(content))
