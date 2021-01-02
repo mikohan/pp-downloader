@@ -70,7 +70,9 @@ else:
 
 print("Starting collecting rows")
 
-with open(title_course + ".txt", append) as file:
+with open(title_course + ".csv", append) as file:
+    file.write("Video_Title,vid_id" + "\n")
+
     for (i, div) in enumerate(divs):
         time.sleep(1)
         single_link = str(URL) + str(div.a["href"])
@@ -85,9 +87,11 @@ with open(title_course + ".txt", append) as file:
         id = str(m.group(2))
 
         row = (
-            str(i + 1).zfill(5)
+            '"'
+            + str(i + 1).zfill(5)
             + " - "
             + str(title.text).replace(",", ";")
+            + '"'
             + ","
             + str(id)
             + "\n"
