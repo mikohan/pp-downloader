@@ -32,11 +32,13 @@ signup_form = browser.get_form(id="new_member_session")
 signup_form["member[email]"].value = USER
 signup_form["member[password]"].value = PASS
 browser.submit_form(signup_form)
+print("Form submited")
 
 browser.open(url_course)
 content = browser.parsed()
 # browser.find_all("div", class_="syllabus__item")
 # links = browser.get_links()
+print("Getting content")
 
 soup = bs(str(content), "lxml")
 
@@ -52,6 +54,8 @@ if os.path.exists("links.txt"):
     append = "a"
 else:
     append = "w"
+
+print("Starting collecting rows")
 
 with open("links.txt", append) as file:
     for (i, div) in enumerate(divs):
