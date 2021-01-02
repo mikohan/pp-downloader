@@ -43,8 +43,8 @@ print("Getting content")
 soup = bs(str(content), "lxml")
 
 raw_divs = soup.find_all("div", class_="syllabus__item")
-print(len(divs), "Before set")
-uniq_divs = set(divs)
+print(len(raw_divs), "Before set")
+uniq_divs = set(raw_divs)
 print(len(uniq_divs), "unuque divs")
 divs = list(uniq_divs)
 
