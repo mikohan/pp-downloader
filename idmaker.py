@@ -29,7 +29,7 @@ try:
     url_course = str(sys.argv[1])
     title_course = str(sys.argv[2]).replace(" ", "_")
     print("------------------")
-    print(url_course, title_course)
+    print("args passed...")
 
 except:
     sys.exit("Pass course url and course title please")

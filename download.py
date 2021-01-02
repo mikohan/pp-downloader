@@ -6,6 +6,8 @@ import time
 
 import pandas as pd
 import requests
+import os
+import sys
 
 
 class AssetNotFoundError(Exception):
@@ -43,6 +45,8 @@ class Video(object):
             }
             else "mp4"
         )
+        self.save_path = str(sys.argv[1])
+        self.vid_ids = str(sys.argv[2])
 
     def get_assets(self):
         """Parse video blob list from assets source.
@@ -102,10 +106,14 @@ class Video(object):
 
         # If there's no video name provided, use the original video url
         if self.vid_name is None:
-            path = self.vidurl.rpartition("/")[2]
+            path1 = self.vidurl.rpartition("/")[2]
         else:
-            path = self.vid_name + f".{self.container}"
+            path1 = self.vid_name + f".{self.container}"
 
+        if self.save_path:
+            path = os.path.join(self.save_path, path1)
+        else:
+            path = path1
         # Download the video stream into a binary file
         try:
             r = requests.get(self.vidurl, stream=True)
@@ -132,7 +140,12 @@ def download_vid(item):
 
 
 if __name__ == "__main__":
-    vid_ids = pd.read_csv("vid_ids.csv", comment="#", header=0)
+    if sys.argv[2]:
+        file = sys.argv[2]
+    else:
+        file = "vid_ids.csv"
+
+    vid_ids = pd.read_csv(file, comment="#", header=0)
     ids = [tuple(v) for v in vid_ids[["Video_Title", "vid_id"]].values]
     start = time.time()
     results = ThreadPool(14).imap_unordered(download_vid, ids)
