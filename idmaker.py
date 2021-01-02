@@ -1,3 +1,4 @@
+import sys
 from bs4 import BeautifulSoup as bs
 import requests
 from requests.auth import HTTPBasicAuth
@@ -7,6 +8,7 @@ import csv
 from config import PASS, USER, URL
 import os
 import time
+
 
 re._pattern_type = re.Pattern
 import werkzeug
@@ -23,6 +25,14 @@ user_agent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Ge
 url_course = (
     "https://www.englishcoachchad.com/products/practice-paradise/categories/553711"
 )
+try:
+    url_course = str(sys.argv[1])
+    title_course = str(sys.argv[2]).replace(" ", "_")
+    print("------------------")
+    print(url_course, title_course)
+
+except:
+    sys.exit("Pass course url and course title please")
 
 browser = RoboBrowser(user_agent=user_agent, parser="lxml")
 
@@ -43,10 +53,13 @@ print("Getting content")
 soup = bs(str(content), "lxml")
 
 raw_divs = soup.find_all("div", class_="syllabus__item")
+
 print(len(raw_divs), "Before set")
-uniq_divs = set(raw_divs)
-print(len(uniq_divs), "unuque divs")
-divs = list(uniq_divs)
+divs = []
+for rd in raw_divs:
+    if rd not in divs:
+        divs.append(rd)
+print(len(divs), "unuque divs")
 
 
 append: str = "w"
@@ -57,7 +70,7 @@ else:
 
 print("Starting collecting rows")
 
-with open("links.txt", append) as file:
+with open(title_course + ".txt", append) as file:
     for (i, div) in enumerate(divs):
         time.sleep(1)
         single_link = str(URL) + str(div.a["href"])
@@ -81,12 +94,3 @@ with open("links.txt", append) as file:
         )
         file.write(row)
         print(row)
-
-# 1 - First Lesson Shadowing,hi7s2ot6qa
-# Here will be loop for finded liks
-
-
-# Write to csv file
-
-with open("tmp.html", "w") as f:
-    f.write(str(content))
