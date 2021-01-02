@@ -1,16 +1,10 @@
 import requests
 from bs4 import BeautifulSoup as bs
 
+html = open("tmp.html", r)
+soup = bs(html, "lxml")
 
-s = requests.session()
+divs = soup.find_all("div", "syllabus__item")
 
-csrf_token = s.get(URL).cookies["_kjb_session"]
-
-data = {
-    "authenticity_token": csrf_token,
-    "member[email]": "angara99@gmail.com",
-    "member[password]": "suki33338",
-}
-
-res = s.post(URL_LOGIN, headers=HEADERS, data=data)
-print(res)
+for div in divs:
+    print(div.a("href"))

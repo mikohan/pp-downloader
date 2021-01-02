@@ -48,7 +48,7 @@ else:
 with open("links.txt", append) as file:
     for link in links:
         file.write(str(link.get("href")) + "\n")
-        print(URL + link.get("href"))
+        print(link.get("href"))
 
 # Here will be loop for finded liks
 
