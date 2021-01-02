@@ -36,8 +36,15 @@ browser.submit_form(signup_form)
 browser.open(url_course)
 
 content = browser.parsed()
-browser.find_all("div", class_="syllabus__item")
-links = browser.get_links()
+# browser.find_all("div", class_="syllabus__item")
+# links = browser.get_links()
+
+soup = bs(str(content), "lxml")
+
+divs = soup.find_all("div", class_="syllabus__item")
+
+for div in divs:
+    print(div.a["href"])
 
 append: str = "w"
 if os.path.exists("links.txt"):
@@ -46,9 +53,9 @@ else:
     append = "w"
 
 with open("links.txt", append) as file:
-    for link in links:
-        file.write(str(link.get("href")) + "\n")
-        print(link.get("href"))
+    for div in divs:
+        file.write(str(div.a["href"]) + "\n")
+        print(div.a["href"])
 
 # Here will be loop for finded liks
 
