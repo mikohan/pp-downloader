@@ -4,7 +4,12 @@ import re
 
 from request_test import URL
 
-with open("tmp.html", "r") as html:
+
+def get_video_id(url: str, headers: dict) -> str:
+
+    r = requests.get(url, headers)
+    html = r.text
+
     soup = bs(html, "lxml")
     # divs_all = soup.find_all("div", class_="syllabus__item")
     f = open("single_page.html", "r")
@@ -13,3 +18,4 @@ with open("tmp.html", "r") as html:
     d = s.find("div", class_="wistia_embed")
     m = re.search('(wistia_async_)(\w+)"', str(d))
     print(m.group(2))
+    return m.group(2)
