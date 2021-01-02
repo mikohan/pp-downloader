@@ -29,20 +29,23 @@ browser = RoboBrowser(user_agent=user_agent, parser="lxml")
 browser.open(url_login)
 
 signup_form = browser.get_form(id="new_member_session")
-print(signup_form)
 signup_form["member[email]"].value = USER
-
 signup_form["member[password]"].value = PASS
 browser.submit_form(signup_form)
-browser.open(url_course)
 
+browser.open(url_course)
 content = browser.parsed()
 # browser.find_all("div", class_="syllabus__item")
 # links = browser.get_links()
 
 soup = bs(str(content), "lxml")
 
-divs = soup.find_all("div", class_="syllabus__item")
+raw_divs = soup.find_all("div", class_="syllabus__item")
+print(len(divs), "Before set")
+uniq_divs = set(divs)
+print(len(uniq_divs), "unuque divs")
+divs = list(uniq_divs)
+
 
 append: str = "w"
 if os.path.exists("links.txt"):
@@ -80,10 +83,6 @@ with open("links.txt", append) as file:
 
 
 # Write to csv file
-
-with open("video_ids.csv", "a") as csv:
-    # loop here
-    pass
 
 with open("tmp.html", "w") as f:
     f.write(str(content))

@@ -127,7 +127,7 @@ def download_vid(item):
             video id (used for downloading) associted with a given video.
     """
     vid_name, vid_id = item
-    vid = Video(vid_name, vid_id, resolution="1080p")
+    vid = Video(vid_name, vid_id, resolution="720p")
     vid.download()
 
 
