@@ -5,17 +5,14 @@ import re
 from config import URL, HEADERS
 
 
-def get_video_id(url: str, HEADERS: dict) -> str:
+def get_video_id(url: str) -> str:
 
-    r = requests.get(url, headers)
+    r = requests.get(str(url), headers=HEADERS)
     html = r.text
+    print(html)
 
-    soup = bs(html, "lxml")
-    # divs_all = soup.find_all("div", class_="syllabus__item")
-    f = open("single_page.html", "r")
-    content = f.read()
-    s = bs(content, "lxml")
+    s = bs(html, "lxml")
     d = s.find("div", class_="wistia_embed")
+    print(d)
     m = re.search('(wistia_async_)(\w+)"', str(d))
-    print("in get video function", m.group(2))
     return m.group(2)

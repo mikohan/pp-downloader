@@ -6,6 +6,7 @@ from linkParser import get_video_id
 import csv
 from config import PASS, USER, URL
 import os
+import time
 
 re._pattern_type = re.Pattern
 import werkzeug
@@ -43,9 +44,6 @@ soup = bs(str(content), "lxml")
 
 divs = soup.find_all("div", class_="syllabus__item")
 
-for div in divs:
-    print(div.a["href"])
-
 append: str = "w"
 if os.path.exists("links.txt"):
     append = "a"
@@ -53,14 +51,25 @@ else:
     append = "w"
 
 with open("links.txt", append) as file:
-    for div in divs:
-        singl_link = str(URL) + str(div.a["href"]
-        title = div.find('p', class_='syllabus__title').text
+    for (i, div) in enumerate(divs):
+        time.sleep(1)
+        single_link = str(URL) + str(div.a["href"])
+        title = div.find("p", class_="syllabus__title")
 
+        browser.open(single_url)
+        page_html = browser.parsed()
 
-        id = get_video_id(singl_link)
-        file.write(str(i + 1) id) + ' - ' + str(title) + ',' + str(id) + "\n")
-        print(div.a["href"])
+        s = bs(page_html, "lxml")
+        d = s.find("div", class_="wistia_embed")
+        print(d)
+        m = re.search('(wistia_async_)(\w+)"', str(d))
+        id = str(m.group(2))
+
+        row = str(i + 1).zfill(2) + " - " + str(title.text) + "," + str(id) + "\n"
+        file.write(row)
+        print(row)
+        if i == 5:
+            break
 
 # 1 - First Lesson Shadowing,hi7s2ot6qa
 # Here will be loop for finded liks
