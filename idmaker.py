@@ -54,9 +54,15 @@ else:
 
 with open("links.txt", append) as file:
     for div in divs:
-        file.write(str(div.a["href"]) + "\n")
+        singl_link = str(URL) + str(div.a["href"]
+        title = div.find('p', class_='syllabus__title').text
+
+
+        id = get_video_id(singl_link)
+        file.write(str(i + 1) id) + ' - ' + str(title) + ',' + str(id) + "\n")
         print(div.a["href"])
 
+# 1 - First Lesson Shadowing,hi7s2ot6qa
 # Here will be loop for finded liks
 
 
