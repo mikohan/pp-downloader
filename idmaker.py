@@ -56,20 +56,24 @@ with open("links.txt", append) as file:
         single_link = str(URL) + str(div.a["href"])
         title = div.find("p", class_="syllabus__title")
 
-        browser.open(single_url)
-        page_html = browser.parsed()
+        browser.open(single_link)
+        page_html = str(browser.parsed())
 
         s = bs(page_html, "lxml")
         d = s.find("div", class_="wistia_embed")
-        print(d)
         m = re.search('(wistia_async_)(\w+)"', str(d))
         id = str(m.group(2))
 
-        row = str(i + 1).zfill(2) + " - " + str(title.text) + "," + str(id) + "\n"
+        row = (
+            str(i + 1).zfill(5)
+            + " - "
+            + str(title.text).replace(",", ";")
+            + ","
+            + str(id)
+            + "\n"
+        )
         file.write(row)
         print(row)
-        if i == 5:
-            break
 
 # 1 - First Lesson Shadowing,hi7s2ot6qa
 # Here will be loop for finded liks

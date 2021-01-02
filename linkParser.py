@@ -5,7 +5,7 @@ import re
 from config import URL, HEADERS
 
 
-def get_video_id(url: str) -> str:
+def get_video_id(browser, url: str) -> str:
 
     r = requests.get(str(url), headers=HEADERS)
     html = r.text
