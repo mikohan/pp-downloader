@@ -5,7 +5,7 @@ import re
 from request_test import URL
 
 with open("tmp.html", "r") as html:
-    soup = bs(html, "html.parser")
+    soup = bs(html, "lxml")
     # divs_all = soup.find_all("div", class_="syllabus__item")
     f = open("single_page.html", "r")
     content = f.read()
