@@ -63,7 +63,7 @@ print(len(divs), "unuque divs")
 
 
 append: str = "w"
-if os.path.exists("links.txt"):
+if os.path.exists(str(title_course) + ".csv"):
     append = "a"
 else:
     append = "w"
