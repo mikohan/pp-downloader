@@ -92,7 +92,7 @@ with open(title_course + ".csv", append) as file:
             '"'
             + str(i + 1).zfill(5)
             + " - "
-            + str(title.text).replace(",", ";")
+            + str(title.text).replace(",", ";").replace("/", "")
             + '"'
             + ","
             + str(id)
