@@ -68,10 +68,12 @@ if os.path.exists(str(title_course) + ".csv"):
 else:
     append = "w"
 
+
 print("Starting collecting rows")
 
 with open(title_course + ".csv", append) as file:
-    file.write("Video_Title,vid_id" + "\n")
+    if append == "w":
+        file.write("Video_Title,vid_id" + "\n")
 
     for (i, div) in enumerate(divs):
         time.sleep(1)
