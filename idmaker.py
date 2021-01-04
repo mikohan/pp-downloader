@@ -100,3 +100,4 @@ with open(title_course + ".csv", append) as file:
         )
         file.write(row)
         print(row)
+        # Comment for git hub
